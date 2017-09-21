@@ -209,24 +209,6 @@ export default class JoinSession extends Component {
                                     </TableBody>
                                 </Table>
                             </Paper>
-
-                            {/* <input type="text" name="werewolf" id="werewolfInputBox" />
-                                    <span> werewolves </span> <p />
-
-                                    <input type="text" name="villager" id="villagerInputBox" />
-                                    <span> villagers </span> <p />
-
-                                    <input type="checkbox" name="prophet" id="prophetCheckBox" checked />
-                                    <span> prophet </span> <p />
-
-                                    <input type="checkbox" name="witch" id="witchCheckBox" checked />
-                                    <span> witch </span> <p />
-
-                                    <input type="checkbox" name="guard" id="guardCheckBox" />
-                                    <span> guard </span> <p />
-
-                                    <input type="checkbox" name="cupid" id="cupidCheckBox" />
-                                    <span> cupid </span> <p /> */}
                         </div>
                         : ''
                 }
@@ -240,14 +222,6 @@ export default class JoinSession extends Component {
                         />
                         <RaisedButton label={this.state.isHost ? 'host' : 'join'}
                             primary={true} style={styles.button} onClick={this.onClickHostOrJoin.bind(this)} />
-
-                        {/* <p> Enter you name here </p>
-                        <input type="text" name="name" id="nameInputBox" />
-                        <button onClick={this.onClickHostOrJoin.bind(this)}>
-                            {this.state &&
-                                <span> {this.state.isHost ? 'host' : 'join'} </span>
-                            }
-                        </button> */}
                     </Paper>
                 </div>
             </div>
