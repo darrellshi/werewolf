@@ -28,7 +28,7 @@ export default class Home extends Component {
                 </div>
                 <RaisedButton label="host session" primary={true} style={buttonStyle} onClick={this.onClickHostSession}/>
                 <RaisedButton label="join session" primary={true} style={buttonStyle} onClick={this.onClickJoinSession}/>
-                {/* <RaisedButton label="test set up 9 players" primary={true} style={buttonStyle} onClick={this.testSetupNinePlayers}/> */}
+                <RaisedButton label="test set up 9 players" primary={true} style={buttonStyle} onClick={this.testSetupNinePlayers}/>
             </div>
         );
     }

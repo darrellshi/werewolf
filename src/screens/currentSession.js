@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import logo from './logo.svg';
-import Paper from 'material-ui/Paper'
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn,
-} from 'material-ui/Table'
 import RaisedButton from 'material-ui/RaisedButton'
+import GameConfiguration from '../components/GameConfiguration'
+import PlayerList from '../components/PlayerList'
+import StatusBar from '../components/StatusBar'
+import YourRoleBar from '../components/YourRoleBar'
 
 const viewURL = 'http://localhost:3333/view/'
 const startGameURL = 'http://localhost:3333/start/'
@@ -103,185 +98,19 @@ export default class CurrentSession extends Component {
 
         const game = this.state.game
 
-        const styles = {
-            statusPaperStyle: {
-                height: 100,
-                width: 300,
-                margin: 20,
-                textAlign: 'center',
-                display: 'inline-block'
-            },
-            gamePaperStyle: {
-                height: 60 + 51 * 6,
-                width: 300,
-                margin: 20,
-                textAlign: 'center',
-                display: 'inline-block'
-            },
-            playersPaperStyle: {
-                height: 60 + 51 * this.state.game.players.length,
-                width: 300,
-                margin: 20,
-                textAlign: 'center',
-                display: 'inline-block'
-            },
-            yourRolePaperStyle: {
-                height: 60,
-                width: 300,
-                margin: 20,
-                textAlign: 'center',
-                display: 'inline-block'
-            },
-            button: {
-                margin: 12
-            }
+        const buttonStyle = {
+            margin: 12
         }
-
-        const waitingNumber = game.roles.length - game.players.length
-
-        const statusBar = (
-            <Paper style={styles.statusPaperStyle} zDepth={1}>
-                <p> Host: {game.host} </p>
-                {
-                    waitingNumber > 0 ?
-                        <p> Waiting for <b><i>{waitingNumber}</i></b> more {waitingNumber > 1 ? 'people' : 'person'} </p>
-                        :
-                        <p><b><i> Ready to start! </i></b></p>
-                }
-            </Paper>
-        )
-
-        const playerList = (
-            <div>
-                <Paper style={styles.playersPaperStyle} zDepth={1}>
-                    {/* <p> Host: {game.host} </p>
-                    <p> Total players: {game.players.length} </p> */}
-                    <Table allRowsSelected={false} selectable={false}>
-                        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                            <TableRow>
-                                <TableHeaderColumn>Joined Players</TableHeaderColumn>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody displayRowCheckbox={false}>
-                            {
-                                game.players.map((player) => {
-                                    return (
-                                        <TableRow>
-                                            <TableRowColumn>
-                                                {player.name}
-                                            </TableRowColumn>
-                                        </TableRow>
-                                    )
-                                })
-                            }
-                        </TableBody>
-                    </Table>
-                </Paper>
-            </div>
-        )
-
-        const playerListWithRoles = (
-            <div>
-                <Paper style={styles.playersPaperStyle} zDepth={1}>
-                    <Table allRowsSelected={false} selectable={false}>
-                        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                            <TableRow>
-                                <TableHeaderColumn>Player</TableHeaderColumn>
-                                <TableHeaderColumn>Role</TableHeaderColumn>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody displayRowCheckbox={false}>
-                            {
-                                game.players.map((player) => {
-                                    return (
-                                        <TableRow>
-                                            <TableRowColumn>
-                                                {player.name}
-                                            </TableRowColumn>
-                                            <TableRowColumn>
-                                                {player.role}
-                                            </TableRowColumn>
-                                        </TableRow>
-                                    )
-                                })
-                            }
-                        </TableBody>
-                    </Table>
-                </Paper>
-            </div>
-        )
-
-        const yourRole = (
-            <div>
-                <Paper style={styles.yourRolePaperStyle} zDepth={1}>
-                    <p> You role is: <b><i>{this.state.myRole}</i></b> </p>
-                </Paper>
-            </div>
-        )
-
-        // TODO: if number of role is 0 don't display the row
-        const gameSettingList = (
-            <div>
-                <Paper style={styles.gamePaperStyle} zDepth={1}>
-                    <Table allRowsSelected={false} selectable={false}>
-                        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                            <TableRow>
-                                <TableHeaderColumn>Number</TableHeaderColumn>
-                                <TableHeaderColumn>Role</TableHeaderColumn>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody displayRowCheckbox={false}>
-                            <TableRow>
-                                <TableRowColumn>
-                                    {game.numOfWerewolves}
-                                </TableRowColumn>
-                                <TableRowColumn>Werewolf</TableRowColumn>
-                            </TableRow>
-                            <TableRow>
-                                <TableRowColumn>
-                                    {game.numOfVillagers}
-                                </TableRowColumn>
-                                <TableRowColumn>Villager</TableRowColumn>
-                            </TableRow>
-                            <TableRow>
-                                <TableRowColumn>
-                                    {game.numOfProphet}
-                                </TableRowColumn>
-                                <TableRowColumn>Prophet</TableRowColumn>
-                            </TableRow>
-                            <TableRow>
-                                <TableRowColumn>
-                                    {game.numOfWitch}
-                                </TableRowColumn>
-                                <TableRowColumn>Witch</TableRowColumn>
-                            </TableRow>
-                            <TableRow>
-                                <TableRowColumn>
-                                    {game.numOfGuard}
-                                </TableRowColumn>
-                                <TableRowColumn>Guard</TableRowColumn>
-                            </TableRow>
-                            <TableRow>
-                                <TableRowColumn>
-                                    {game.numOfCupid}
-                                </TableRowColumn>
-                                <TableRowColumn>Cupid</TableRowColumn>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </Paper>
-            </div>
-        )
 
         const renderGameStarted = (
             <div>
                 {this.state.isHost ?
-                    playerListWithRoles
+                    <PlayerList shouldShowRoles={true} game={game} />
                     :
                     <div>
-                        {gameSettingList}
-                        {yourRole}
-                        <RaisedButton label="exit game" primary={true} style={styles.button} onClick={this.onClickExit.bind(this)} />
+                        <GameConfiguration game={game} />
+                        <YourRoleBar role={this.state.myRole} />
+                        <RaisedButton label="exit game" primary={true} style={buttonStyle} onClick={this.onClickExit.bind(this)} />
                     </div>
                 }
             </div>
@@ -289,10 +118,10 @@ export default class CurrentSession extends Component {
 
         const renderGameNotStarted = (
             <div>
-                {statusBar}
-                {playerList}
+                <StatusBar host={game.host} waitingNumber={game.roles.length - game.players.length} />
+                <PlayerList shouldShowRoles={false} game={game} />
                 {this.state.isHost && game.numberOfRoles === game.players.length &&
-                    <RaisedButton label="start game" primary={true} style={styles.button} onClick={this.onClickStart.bind(this)} />
+                    <RaisedButton label="start game" primary={true} style={buttonStyle} onClick={this.onClickStart.bind(this)} />
                 }
             </div>
         )
@@ -303,7 +132,6 @@ export default class CurrentSession extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h2>Welcome to Werewolf</h2>
                 </div>
-
                 {game.hasStarted ?
                     renderGameStarted
                     :
